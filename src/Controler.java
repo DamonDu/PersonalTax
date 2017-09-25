@@ -12,12 +12,8 @@ public class Controler {
 		return controlerInstance;
 	}
 	
-	public void run() {
+	public double run(double income) {
 		RuleManager manager = RuleManager.getInstance();
-		int c = 6;
-		double a[] = {1, 2, 3, 4, 5, 6};
-		double b[] = {1, 2, 3, 4, 5, 6};
-		TaxRule taxRule = new TaxRule(c, a, b);
-		manager.modify(taxRule);
+		return Calculator.calculate(income);
 	}
 }

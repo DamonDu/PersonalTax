@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><taxRule>
+<!-- Edited with XML Spy v2007 (http://www.altova.com) -->
+<taxRule>
 	<firstThreshold>1600</firstThreshold>
 	<numOfLevel>5</numOfLevel>
 	<threshold>
@@ -14,5 +15,5 @@
 		<item>0.15</item>
 		<item>0.2</item>
 		<item>0.25</item>
-	<temp/></taxRate>
+	</taxRate>
 </taxRule>

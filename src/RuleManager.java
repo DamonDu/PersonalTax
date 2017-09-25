@@ -47,6 +47,7 @@ public class RuleManager {
 		Document document = parse("config.xml");
 		try {
 			int numOfLevel = Integer.parseInt(document.getElementsByTagName("numOfLevel").item(0).getTextContent());
+			double firstThreshold = Integer.parseInt(document.getElementsByTagName("firstThreshold").item(0).getTextContent());
 			double threshold[] = new double[numOfLevel];
 			double taxRate[] = new double[numOfLevel];
 			Node thresholdNode = document.getElementsByTagName("threshold").item(0);
@@ -59,7 +60,7 @@ public class RuleManager {
 					taxRate[i] = Double.parseDouble(taxRateElement.getElementsByTagName("item").item(i).getTextContent());
 				}
 			}
-			rule = new TaxRule(numOfLevel, threshold, taxRate);
+			rule = new TaxRule(numOfLevel, firstThreshold, threshold, taxRate);
 		}
 		catch (Exception e) {
 			System.out.println("Wrong format of config.xml!");
@@ -73,10 +74,12 @@ public class RuleManager {
 	public void modify(TaxRule taxRule) {
 		
 		try {
-			Document document = parse("config.xml");
+			Document document = parse("resource/config.xml");
 			int numOfLevel = taxRule.getNumOfLevel();
+			double firstThreshold = taxRule.getFirstThreshold();
 			int oldNumOfLevel = Integer.parseInt(document.getElementsByTagName("numOfLevel").item(0).getTextContent());
 			document.getElementsByTagName("numOfLevel").item(0).setTextContent(String.valueOf(numOfLevel));
+			document.getElementsByTagName("firstThreshold").item(0).setTextContent(String.valueOf(firstThreshold));
 			Node thresholdNode = document.getElementsByTagName("threshold").item(0);
 			Node taxRateNode = document.getElementsByTagName("taxRate").item(0);
 			if (thresholdNode.getNodeType() == Node.ELEMENT_NODE && taxRateNode.getNodeType() == Node.ELEMENT_NODE) {

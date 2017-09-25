@@ -1,7 +1,7 @@
 
 public class PersonalTax {
-	public static void main(String[] arg) {
+	public static double main(String[] arg) {
 		Controler controler = Controler.getInstance();
-		controler.run();
+		return controler.run(Double.parseDouble(arg[0]));
 	}
 }

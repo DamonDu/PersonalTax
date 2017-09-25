@@ -1,0 +1,45 @@
+body {
+  padding-top: 10px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+
+.container {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.form-calculator {
+  padding-bottom: 15px;
+}
+
+.form-calculator .form-calculator-heading {
+  margin-bottom: 10px;
+}
+
+.form-calculator .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.form-calculator .form-control:focus {
+  z-index: 2;
+}
+
+.panel-container {
+  max-width: 600px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.input-group {
+  max-width: 300px;
+  padding-bottom: 15px;
+  margin: auto;
+}
