@@ -44,7 +44,7 @@ public class RuleManager {
 	}
 	
 	public void load() {
-		Document document = parse("config.xml");
+		Document document = parse("resource/config.xml");
 		try {
 			int numOfLevel = Integer.parseInt(document.getElementsByTagName("numOfLevel").item(0).getTextContent());
 			double firstThreshold = Integer.parseInt(document.getElementsByTagName("firstThreshold").item(0).getTextContent());
@@ -111,6 +111,18 @@ public class RuleManager {
 	        DOMSource source = new DOMSource(document);
 	        StreamResult result = new StreamResult("config.xml");
 	        transformer.transform(source, result);
+		}
+		catch (Exception e) {
+			System.out.println("Wrong format of config.xml!");
+		}
+	}
+	
+public void modify(String xml) {
+		String filepath = "resource/config.xml";
+		try {
+			FileWriter writer = new FileWriter(filepath);
+			writer.write(xml);
+			writer.close();
 		}
 		catch (Exception e) {
 			System.out.println("Wrong format of config.xml!");

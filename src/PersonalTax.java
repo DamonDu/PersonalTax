@@ -1,7 +1,10 @@
-
+import java.util.Scanner;
+ 
 public class PersonalTax {
-	public static double main(String[] arg) {
+	public static void main(String[] arg) {	
+		Scanner scanner = new Scanner(System.in);
 		Controler controler = Controler.getInstance();
-		return controler.run(Double.parseDouble(arg[0]));
+		double income = scanner.nextDouble();
+		System.out.println(controler.run(income));
 	}
 }
