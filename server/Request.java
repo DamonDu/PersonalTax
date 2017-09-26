@@ -1,10 +1,13 @@
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
 import java.io.IOException;
 
 public class Request {
 	private InputStream input;
     private String uri;
     private String method;
+    private String postData;
 
     public Request(InputStream input) {
         this.input = input;
@@ -24,13 +27,14 @@ public class Request {
         for (int j = 0; j < i; j++) {
             request.append((char) buffer[j]);
         }
-        System.out.print("Requesting:\n" + request.toString());
+        System.out.println("Requesting:\n" + request.toString());
 		method = parseMethod(request.toString());
-		if (method != "POST") {
-			uri = parseUri(request.toString());
+		if (method != null && !method.equals("POST")) {
+			uri = parseUri(request.toString());	
 		}
 		else {
 			uri = null;
+			postData = parsePost(request.toString());
 		}
     }
     
@@ -66,6 +70,16 @@ public class Request {
         return null;
     }
     
+    public String parsePost(String requestString) {
+    	int index;
+    	if ((index = requestString.indexOf("data:")) != -1 || (index = requestString.indexOf("xml:")) != -1) {
+    		return requestString.substring(index, requestString.length());
+    	}
+    	else {
+    		return null;
+		}
+    }
+    
     public String getUri() {
         return uri;
     }
@@ -74,4 +88,7 @@ public class Request {
 		return method;
 	}
     
+    public String getPostData() {
+		return postData;
+	}
 }

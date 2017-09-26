@@ -1,6 +1,8 @@
 import java.io.OutputStream;
+import java.sql.Array;
 import java.io.IOException;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.File;
 
 public class Response {
@@ -19,20 +21,27 @@ public class Response {
     public void sendStaticResource() throws IOException {
         byte[] bytes = new byte[BUFFER_SIZE];
         FileInputStream fis = null;
-        
+
         try {
-        	if (request.getMethod() == "POST") {
-//        		System.out.println(request.getMethod());
-        		System.out.println("posting:\n" + request.toString());
-//        		String[] arg = {request.parseValue()};
-//        		double tax = PersonalTax.main(arg);
-//        		System.out.println(tax);
-//        		String xml = "<tax>" + tax + "</tax>";
-//        		String header = "HTTP/1.1 200\r\n" + "Content-Type: text/xml\r\n" + "Content-Length: " + xml.getBytes().length + "\r\n" + "\r\n";
-//        		output.write(header.getBytes());
-//        		output.write(xml.getBytes());
+        	if (request.getMethod().equals("POST")) {
+        		String postData = request.getPostData();
+        		System.out.println(postData);
+        		if (postData.startsWith("data:")) {
+        			double income = Double.parseDouble(postData.substring(5, postData.length()));
+        			double tax = Controler.getInstance().run(income);
+        			String header = "HTTP/1.1 200\r\n" + "Content-Type: text/plain\r\n" + "Content-Length: " + String.valueOf(tax).getBytes().length + "\r\n" + "\r\n";
+        			output.write(header.getBytes());
+        			output.write(String.valueOf(tax).getBytes());
+        		}
+        		if (postData.startsWith("xml:")) {
+        			String xml = postData.substring(4, postData.length());
+        			RuleManager.getInstance().modify(xml);
+        			String header = "HTTP/1.1 200\r\n" + "Content-Type: text/plain\r\n" + "Content-Length: 0\r\n" + "\r\n";
+        			output.write(header.getBytes());
+        		}
         	}
         	else {
+        		System.out.println("method is:" + request.getMethod());
         		//将web文件写入到OutputStream字节流中
                 File file = new File(HttpServer.WEB_ROOT, request.getUri());
                 System.out.println(file.exists());
